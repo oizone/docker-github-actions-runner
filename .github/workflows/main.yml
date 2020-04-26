@@ -22,6 +22,19 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: crazy-max/ghaction-docker-buildx@v1
+      with:
+        version: latest
+    - name: Available platforms
+      run: echo ${{ steps.buildx.outputs.platforms }}
+    - name: run set
+      run: set
+    - name: Login
+      run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_TOKEN }}
+    - name: Run Buildx
+      run: docker buildx build -f Dockerfile -t ${ORG}/github-runner:latest --output "type=image,push=true" --platform linux/amd64,linux/arm/v7,linux/arm64 .
     # Runs a single command using the runners shell
     - name: Run a docker buildx ls
       run: docker buildx ls
