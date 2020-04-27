@@ -6,6 +6,7 @@ ARG TARGETPLATFORM
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
+ENV ANSIBLE_HOST_KEY_CHECKING=False
 ARG APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=yes
 
 RUN echo deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main | tee -a /etc/apt/sources.list
